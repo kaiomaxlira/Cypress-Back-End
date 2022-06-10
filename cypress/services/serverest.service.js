@@ -1,4 +1,4 @@
-import Factory from "../fixtures/factory"
+/* import Factory from "../fixtures/factory"
 
 
 const URL_USUARIOS = '/usuarios'
@@ -507,4 +507,4 @@ export default class Serverest {
             failOnStatusCode: false,
         })
     }
-}
+} */
