@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "message"
+    ],
+    "properties": {
+        "message": {
+            "type": "string",
+            "default": "",
+            "title": "The message Schema",
+            "examples": [
+                "Registro excluído com sucesso | Nenhum registro excluído"
+            ]
+        }
+    },
+    "examples": [{
+        "message": "Registro excluído com sucesso | Nenhum registro excluído"
+    }]
+}

@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "message"
+    ],
+    "properties": {
+        "message": {
+            "type": "string",
+            "default": "",
+            "title": "The message Schema",
+            "examples": [
+                "Este email já está sendo usado"
+            ]
+        }
+    },
+    "examples": [{
+        "message": "Este email já está sendo usado"
+    }]
+}

@@ -1,0 +1,61 @@
+{
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "nome",
+        "email",
+        "password",
+        "administrador",
+        "_id"
+    ],
+    "properties": {
+        "nome": {
+            "type": "string",
+            "default": "",
+            "title": "The nome Schema",
+            "examples": [
+                "Fulano da Silva"
+            ]
+        },
+        "email": {
+            "type": "string",
+            "default": "",
+            "title": "The email Schema",
+            "examples": [
+                "beltrano@qa.com.br"
+            ]
+        },
+        "password": {
+            "type": "string",
+            "default": "",
+            "title": "The password Schema",
+            "examples": [
+                "teste"
+            ]
+        },
+        "administrador": {
+            "type": "string",
+            "default": "",
+            "title": "The administrador Schema",
+            "examples": [
+                "true"
+            ]
+        },
+        "_id": {
+            "type": "string",
+            "default": "",
+            "title": "The _id Schema",
+            "examples": [
+                "0uxuPY0cbmQhpEz1"
+            ]
+        }
+    },
+    "examples": [{
+        "nome": "Fulano da Silva",
+        "email": "beltrano@qa.com.br",
+        "password": "teste",
+        "administrador": "true",
+        "_id": "0uxuPY0cbmQhpEz1"
+    }]
+}

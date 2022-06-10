@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "message"
+    ],
+    "properties": {
+        "message": {
+            "type": "string",
+            "default": "",
+            "title": "The message Schema",
+            "examples": [
+                "Usuário não encontrado"
+            ]
+        }
+    },
+    "examples": [{
+        "message": "Usuário não encontrado"
+    }]
+}
