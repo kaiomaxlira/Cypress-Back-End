@@ -1,68 +1,70 @@
 /// <reference types="cypress" />
 
-import Serverest from "../services/serverest.service";
+import Usuario from "../services/1.usuario.service";
 import ValidaServerest from "../services/validaServerest.service";
 
 describe("Teste de rota /usuarios da API serverest", () => {
 
-  it("Deve buscar todos os usuários cadastrados", () => {
-    Serverest.buscarUsuarios().then((res) => {
-        cy.contractValidation(res, "get-usuarios", 200).then((res) => expect(res).to.be.eq(true));
-        ValidaServerest.validarBuscaDeUsuarios(res);
+    it("Deve buscar todos os usuários cadastrados", () => {
+        Usuario.buscarUsuarios().then((res) => {
+            cy.contractValidation(res, "get-usuarios", 200).then((res) => expect(res).to.be.eq(true));
+            ValidaServerest.validarBuscaDeUsuarios(res);
+        });
     });
-  });
 
     it("Deve cadastrar usuário", () => {
-        Serverest.cadastrarUsuario().then((res) => {
+        Usuario.cadastrarUsuario().then((res) => {
             cy.contractValidation(res, "post-usuarios", 201).then((res) => expect(res).to.be.eq(true));
             ValidaServerest.validarCadastroDeUsuarios(res);
         });
     });
 
     it("Deve falhar ao tentar cadastrar um usuário", () => {
-        Serverest.falhaAoCadastrarUsuario().then((res) => {
+        Usuario.falhaAoCadastrarUsuario().then((res) => {
             cy.contractValidation(res, "post-usuarios", 400).then((res) => expect(res).to.be.eq(true));
             ValidaServerest.validarFalhaAoCadastrarUsuario(res);
         });
     });
 
     it('Deve buscar usuário por ID', () => {
-        Serverest.buscarUsuarioPorId().then((res) => {
+        Usuario.buscarUsuarioPorId().then((res) => {
             cy.contractValidation(res, "get-usuarios-id", 200).then((res) => expect(res).to.be.eq(true));
             ValidaServerest.validarBuscaUsuarioPorId(res)
         })
     })
 
     it('Deve falhar ao tentar encontar usuario por id', () => {
-        Serverest.buscarUsuarioPorIdInvalido().then((res) => {
+        Usuario.buscarUsuarioPorIdInvalido().then((res) => {
             cy.contractValidation(res, "get-usuarios-id", 400).then((res) => expect(res).to.be.eq(true));
             ValidaServerest.validarBuscaUsuarioPorIdInvalido(res)
         })
     })
 
-    it('Deve excluir usuarios', () => {
-        Serverest.excluirUsuario().then((res) => {
-            cy.contractValidation(res, "delete-usuarios", 200).then((res) => expect(res).to.be.eq(true));
-            ValidaServerest.validarexclusaoUsuario(res)
+    it.only('Deve excluir usuarios', () => {
+        Usuario.cadastrarUsuario().then((res) => {
+            Usuario.excluirUsuario().then((res) => {
+                cy.contractValidation(res, "delete-usuarios", 200).then((res) => expect(res).to.be.eq(true));
+                ValidaServerest.validarexclusaoUsuario(res)
+            })
         })
     })
 
     it('Não pode excluir usuario com carrinho cadastrado', () => {
-        Serverest.usuarioComCarrinhoCadastrado().then((res) => {
+        Usuario.usuarioComCarrinhoCadastrado().then((res) => {
             cy.contractValidation(res, "delete-usuarios", 400).then((res) => expect(res).to.be.eq(true));
             ValidaServerest.validarANaoExclusaoDoUsuarioComCarrinho(res)
         })
-    }) 
+    })
 
     it('Deve editar os usuarios', () => {
-        Serverest.editarUsuarios().then((res) => {
+        Usuario.editarUsuarios().then((res) => {
             cy.contractValidation(res, "put-usuarios", 200).then((res) => expect(res).to.be.eq(true));
             ValidaServerest.validarAlteraçaoNoUsuario(res)
         })
     })
 
     it('Deve avisar que o email ja esta cadastrado', () => {
-        Serverest.emailJaCadastrado().then((res) => {
+        Usuario.emailJaCadastrado().then((res) => {
             cy.contractValidation(res, "put-usuarios", 400).then((res) => expect(res).to.be.eq(true));
             ValidaServerest.validarQueEmailDoUsuarioJaEstaCadastrado(res)
         })

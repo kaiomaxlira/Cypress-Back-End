@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
-import Serverest from "../services/serverest.service";
+import Login from '../services/2.login.service'
+import Carrinhos from "../services/4.carrionho.service";
 import ValidaServerest from "../services/validaServerest.service";
 
 describe("Teste de rota /carrinhos da API serverest", () => {
@@ -11,11 +12,11 @@ describe("Teste de rota /carrinhos da API serverest", () => {
 
     context('Logar com Sucesso', () => {
         beforeEach('Logar', () =>{
-            Serverest.buscarUsuarioParaLogin()
+            Carrinhos.buscarUsuarioParaLogin()
             cy.get('@usuarioLogin').then( usuario => {
-                Serverest.logar(usuario).then( res => {
+                Login.logar(usuario).then( res => {
                     ValidaServerest.validarLoginComSucesso(res)
-                    Serverest.salvarBearer(res)
+                    Carrinhos.salvarBearer(res)
                 })
             })        
         })
@@ -23,19 +24,19 @@ describe("Teste de rota /carrinhos da API serverest", () => {
                     //POST_CARRINHOS
 
         it('Deve cadastrar carrinho', () => {
-            Serverest.cadastrarCarrinho().then( res => {
+            Carrinhos.cadastrarCarrinho().then( res => {
                 cy.contractValidation(res, "post-carrinhos", 201).then((res) => expect(res).to.be.eq(true))
                 ValidaServerest.validarCadastroDeCarrinho(res)
             })
         })
         it('Deve avisar que deu erro ao cadastrar carrinho', () => {
-            Serverest.cadastrarCarrinhoComErro().then( res => {
+            Carrinhos.cadastrarCarrinhoComErro().then( res => {
                 cy.contractValidation(res, "post-carrinhos", 400).then((res) => expect(res).to.be.eq(true))
                 ValidaServerest.validarCadastroDeCarrinhoComErro(res)
             })
         })
         it('Deve avisar que o token é invalido', () => {
-            Serverest.cadastrarCarrinhoComTokenInvalido().then( res => {
+            Carrinhos.cadastrarCarrinhoComTokenInvalido().then( res => {
                 cy.contractValidation(res, "post-carrinhos", 401).then((res) => expect(res).to.be.eq(true))
                 ValidaServerest.validarCadastroDeCarrinhoComTokenInvalido(res)
             })
@@ -44,13 +45,13 @@ describe("Teste de rota /carrinhos da API serverest", () => {
                             //DELETE-CARRIONHOS-CANCELAR-COMPRA
 
         it('Deve deletar carrionho cancelando compra', () => {
-            Serverest.deletarCarrinhoCancelandoCompra().then( res => {
+            Carrinhos.deletarCarrinhoCancelandoCompra().then( res => {
                 cy.contractValidation(res, "delete-carrinhos-cancelar-compra", 200).then((res) => expect(res).to.be.eq(true))
                 ValidaServerest.validarDeletarCarrinhoCancelandoCompra(res)
             })
         })
         it('Deve avisar token ausente', () => {
-            Serverest.carrinhoTokenInvalido().then( res => {
+            Carrinhos.carrinhoTokenInvalido().then( res => {
                 cy.contractValidation(res, "delete-carrinhos-cancelar-compra", 401).then((res) => expect(res).to.be.eq(true))
                 ValidaServerest.validarCarrinhoTokenInvalido(res)
             })
@@ -59,13 +60,13 @@ describe("Teste de rota /carrinhos da API serverest", () => {
                                     //DELETE-CARRIONHOS-CONCLUIR-COMPRA
           
         it('Deve deletar carrionho e concluir compra', () => {
-            Serverest.deletarCarrinhoConcluirCompra().then( res => {
+            Carrinhos.deletarCarrinhoConcluirCompra().then( res => {
                 cy.contractValidation(res, "delete-carrinhos-concluir-compra", 200).then((res) => expect(res).to.be.eq(true))
                 ValidaServerest.validarDeletarCarrinhoConcluirCompra(res)
             })
         })
         it('Deve avisar token ausente', () => {
-            Serverest.carrinhoTokenInvalidoOuAusente().then( res => {
+            Carrinhos.carrinhoTokenInvalidoOuAusente().then( res => {
                 cy.contractValidation(res, "delete-carrinhos-concluir-compra", 401).then((res) => expect(res).to.be.eq(true))
                 ValidaServerest.validarCarrinhoTokenInvalidoOuAusente(res)
             })
@@ -76,7 +77,7 @@ describe("Teste de rota /carrinhos da API serverest", () => {
                     //GET-CARRINHOS
 
     it('Deve buscar todos os carrinhos', () => {
-        Serverest.buscarCarrinhos().then( res => {
+        Carrinhos.buscarCarrinhos().then( res => {
             cy.contractValidation(res, "get-carrinhos", 200).then((res) => expect(res).to.be.eq(true))
             ValidaServerest.validarBuscaDeCarrinhos(res)
         })
@@ -85,13 +86,13 @@ describe("Teste de rota /carrinhos da API serverest", () => {
                 //GET-CARRINHOS-ID
 
     it('Deve buscar todos os carrinhos com id', () => {
-        Serverest.buscarCarrinhosComId().then( res => {
+        Carrinhos.buscarCarrinhosComId().then( res => {
             cy.contractValidation(res, "get-carrinhos-id", 200).then((res) => expect(res).to.be.eq(true))
             ValidaServerest.validarBuscaDeCarrinhosComId(res)
         })
     })
     it('Deve avisar do erro', () => {
-        Serverest.buscarCarrinhosErro().then( res => {
+        Carrinhos.buscarCarrinhosErro().then( res => {
             cy.contractValidation(res, "get-carrinhos-id", 400).then((res) => expect(res).to.be.eq(true))
             ValidaServerest.validarBuscaDeCarrinhosErro(res)
         })

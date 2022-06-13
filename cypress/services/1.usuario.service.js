@@ -6,7 +6,7 @@ const URL_LOGIN = '/login'
 const URL_PRODUTOS = '/produtos'
 const URL_CARRINHOS = '/carrinhos'
 
-export default class Serverest {
+export default class Usuario {
 
     //USUARIOS
     //GET-USUARIOS
@@ -30,17 +30,20 @@ export default class Serverest {
 
     static falhaAoCadastrarUsuario(){
 
-        return cy.request({
+        return this.buscarUsuarios().then(res => { 
+            let email = res.body.usuarios[0].email
+         cy.request({
             method: 'POST',
             url: URL_USUARIOS,
             body: {
                 "nome": "Fulano da Silva",
-                "email": "titii@qa.com.br",
+                "email": email,
                 "password": "teste",
                 "administrador": "true"
               },
             failOnStatusCode: false,
-        }) 
+        })
+        })
     }
 
         //GET-USUARIOS

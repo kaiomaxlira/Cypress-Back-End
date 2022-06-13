@@ -6,17 +6,17 @@ const URL_LOGIN = '/login'
 const URL_PRODUTOS = '/produtos'
 const URL_CARRINHOS = '/carrinhos'
 
-export default class Serverest {
+export default class Produto {
 
     //GET-PRODUTOS
 
-    static buscarProdutos(){
+    static buscarProdutos() {
         return cy.rest('GET', URL_PRODUTOS)
     }
 
     //POST-PRODUTOS
 
-    static cadastrarProdutoComSucesso(){
+    static cadastrarProdutoComSucesso() {
         let produto = Factory.gerarProduto()
 
         return cy.request({
@@ -26,13 +26,13 @@ export default class Serverest {
             failOnStatusCode: true,
             auth: {
                 bearer: Cypress.env("bearer")
-            } 
+            }
         })
     }
-        
-    static nomeDoProdutoJaExiste(){
+
+    static nomeDoProdutoJaExiste() {
         return cy.request({
-             method: 'POST',
+            method: 'POST',
             url: URL_PRODUTOS,
             body: {
                 "nome": "New name",
@@ -43,11 +43,11 @@ export default class Serverest {
             failOnStatusCode: false,
             auth: {
                 bearer: Cypress.env("bearer")
-            }  
+            }
         })
     }
 
-    static tokenAusenteInvalidoExpirado(){
+    static tokenAusenteInvalidoExpirado() {
         return cy.request({
             method: 'POST',
             url: URL_PRODUTOS,
@@ -57,11 +57,11 @@ export default class Serverest {
                 "preco": 820,
                 "quantidade": 80211,
             },
-            failOnStatusCode: false, 
+            failOnStatusCode: false,
         })
     }
 
-    static rotaExclusivaParaAdministradores(){
+    static rotaExclusivaParaAdministradores() {
         return cy.request({
             method: 'POST',
             url: URL_PRODUTOS,
@@ -70,27 +70,29 @@ export default class Serverest {
                 "preco": 2,
                 "descricao": "Soap",
                 "quantidade": 47185,
-              },
+            },
             failOnStatusCode: false,
             auth: {
                 bearer: Cypress.env("bearer")
-            }  
+            }
         })
     }
 
-            //GET-PROTUDOS-ID
+    //GET-PROTUDOS-ID
 
-    static buscarProdutosId(){
-        let id = 'TKnshLckI4cmuFF7'
-        return cy.request({
-            method: 'GET',
-            url: URL_PRODUTOS + `/${id}`,
-            failOnStatusCode: true,
-            body: null
+    static buscarProdutosId() {
+        return this.buscarProdutos().then(res => {
+            let id = res.body.produtos[0]._id
+            cy.request({
+                method: 'GET',
+                url: URL_PRODUTOS + `/${id}`,
+                failOnStatusCode: true,
+                body: null
+            })
         })
     }
-    
-    static produtoNaoEncontrado(){
+
+    static produtoNaoEncontrado() {
         return this.buscarUsuarios().then(res => {
             let id = res.body.usuarios[0]._id
             cy.request({
@@ -101,9 +103,9 @@ export default class Serverest {
         })
     }
 
-                //DELETE-PRODUTOS
+    //DELETE-PRODUTOS
 
-    static produtoExcluidoComSucesso(){
+    static produtoExcluidoComSucesso() {
         let id = 'qpqDLTP2e2vJXlUv'
         return cy.request({
             method: 'DELETE',
@@ -115,7 +117,7 @@ export default class Serverest {
         })
     }
 
-    static produtoNaoPodeSerExcluido(){
+    static produtoNaoPodeSerExcluido() {
         let id = 'BeeJh5lz3k6kSIzA'
         return cy.request({
             method: 'DELETE',
@@ -127,16 +129,16 @@ export default class Serverest {
         })
     }
 
-    static tokenAusente(){
+    static tokenAusente() {
         let id = 'errado'
         return cy.request({
             method: 'DELETE',
             url: URL_PRODUTOS + `/${id}`,
-            failOnStatusCode: false,           
+            failOnStatusCode: false,
         })
     }
 
-    static ExclusivaParaAdministradores(){
+    static ExclusivaParaAdministradores() {
         let id = 'lRSZhElT46kP708P'
         return cy.request({
             method: 'DELETE',
@@ -146,7 +148,7 @@ export default class Serverest {
                 "preco": 608,
                 "descricao": "Hat",
                 "quantidade": 96810,
-              },
+            },
             failOnStatusCode: false,
             auth: {
                 bearer: Cypress.env("bearer")
@@ -154,27 +156,27 @@ export default class Serverest {
         })
     }
 
-            //PUT-PRODUTOS
+    //PUT-PRODUTOS
 
-    static alterarProduto(){
+    static alterarProduto() {
         let id = 'kIEgBNi7on1HGYG1'
         return cy.request({
             method: 'PUT',
             url: URL_PRODUTOS + `/${id}`,
             failOnStatusCode: true,
-            body:{
+            body: {
                 "nome": "kaio max",
                 "preco": 341,
                 "descricao": "Mouse",
                 "quantidade": 123,
-              },
-              auth: {
+            },
+            auth: {
                 bearer: Cypress.env("bearer")
             }
         })
     }
 
-    static cadastrarProduto(){
+    static cadastrarProduto() {
         let id = 'kIEgBNi7on1HGYf2'
         return cy.request({
             method: 'PUT',
@@ -184,7 +186,7 @@ export default class Serverest {
                 "preco": 341,
                 "descricao": "Mouse",
                 "quantidade": 123,
-              },
+            },
             failOnStatusCode: true,
             auth: {
                 bearer: Cypress.env("bearer")
@@ -192,45 +194,45 @@ export default class Serverest {
         })
     }
 
-    static produtoComMesmoNome(){
+    static produtoComMesmoNome() {
         let id = 'kIEgBNi7on1HGYf2'
         return cy.request({
             method: 'PUT',
             url: URL_PRODUTOS + `/${id}`,
             failOnStatusCode: false,
-            body:{
+            body: {
                 "nome": "kaio MAXX",
                 "preco": 341,
                 "descricao": "Mouse",
                 "quantidade": 123,
-              },
-              auth: {
+            },
+            auth: {
                 bearer: Cypress.env("bearer")
             }
         })
     }
 
-    static tokenInvalido(){
+    static tokenInvalido() {
         let id = 'errado'
         return cy.request({
             method: 'PUT',
             url: URL_PRODUTOS + `/${id}`,
             failOnStatusCode: false,
-                    
+
         })
     }
 
-    static rotaAdministradores(){
+    static rotaAdministradores() {
         let id = 'kIEgBNi7on1HGYf2'
         return cy.request({
             method: 'PUT',
             url: URL_PRODUTOS + `/${id}`,
-            body:{
+            body: {
                 "nome": "kaio MAXX",
                 "preco": 341,
                 "descricao": "Mouse",
                 "quantidade": 123,
-              },
+            },
             failOnStatusCode: false,
             auth: {
                 bearer: Cypress.env("bearer")

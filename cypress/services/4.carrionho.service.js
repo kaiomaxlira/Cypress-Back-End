@@ -6,7 +6,7 @@ const URL_LOGIN = '/login'
 const URL_PRODUTOS = '/produtos'
 const URL_CARRINHOS = '/carrinhos'
 
-export default class Serverest {
+export default class Carrinhos {
 
                //GET-CARRINHOS
 
