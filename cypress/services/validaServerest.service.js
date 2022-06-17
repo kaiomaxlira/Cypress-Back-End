@@ -4,7 +4,7 @@ export default class ValidaServerest{
     // USUÁRIO
 
     static validarBuscaDeUsuarios(resposta){
-        expect(resposta.body.quantidade).to.be.greaterThan(10)
+        expect(resposta.body.quantidade).to.be.greaterThan(1)
     }
 
     static validarCadastroDeUsuarios(resposta){

@@ -1,9 +1,3 @@
-import Factory from "../fixtures/factory"
-
-
-const URL_USUARIOS = '/usuarios'
-const URL_LOGIN = '/login'
-const URL_PRODUTOS = '/produtos'
 const URL_CARRINHOS = '/carrinhos'
 
 export default class Carrinhos {
@@ -117,6 +111,7 @@ export default class Carrinhos {
                 return cy.request({
                     method: 'DELETE',
                     url: URL_CARRINHOS + '/concluir-compra',
+                    body: null,
                     failOnStatusCode: true,
                     auth: {
                         bearer: Cypress.env("bearer")

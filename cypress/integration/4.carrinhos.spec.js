@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import Login from '../services/2.login.service'
-import Carrinhos from "../services/4.carrionho.service";
+import Carrinhos from "../services/4.carrinho.service";
 import ValidaServerest from "../services/validaServerest.service";
 
 describe("Teste de rota /carrinhos da API serverest", () => {
