@@ -6,18 +6,19 @@ import ValidaServerest from "../services/validaServerest.service";
 
 describe("Teste de rota /usuarios da API serverest", () => {
 
-    it("Deve buscar todos os usuários cadastrados", () => {
-        Usuario.buscarUsuarios().then((res) => {
-            cy.contractValidation(res, "get-usuarios", 200).then((res) => expect(res).to.be.eq(true))
-            ValidaServerest.validarBuscaDeUsuarios(res)
-        })
-    })
-
     it("Deve cadastrar usuário", () => {
         Usuario.cadastrarUsuario().then((res) => {
             cy.writeFile('./cypress/fixtures/usuarioid.json', res.body)
+            
             cy.contractValidation(res, "post-usuarios", 201).then((res) => expect(res).to.be.eq(true))
             ValidaServerest.validarCadastroDeUsuarios(res)
+        })
+    })
+
+    it("Deve falhar ao tentar cadastrar um usuário", () => {
+        Usuario.falhaAoCadastrarUsuario().then((res) => {
+            cy.contractValidation(res, "post-usuarios", 400).then((res) => expect(res).to.be.eq(true))
+            ValidaServerest.validarFalhaAoCadastrarUsuario(res)
         })
     })
 
@@ -25,7 +26,7 @@ describe("Teste de rota /usuarios da API serverest", () => {
         cy.fixture('usuarioid').then((res) => {
             let id = res._id
             Usuario.buscarUsuarioPorId(id).then((res) => {
-                cy.contractValidation(res, "get-usuarios-id", 200).then((res) => expect(res).to.be.eq(true));
+                cy.contractValidation(res, "get-usuarios-id", 200).then((res) => expect(res).to.be.eq(true))
                 ValidaServerest.validarBuscaUsuarioPorId(res)
             })
         })

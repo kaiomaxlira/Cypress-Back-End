@@ -4,24 +4,33 @@ const URL_USUARIOS = '/usuarios'
 
 export default class Usuario {
 
-    //USUARIOS
-    //GET-USUARIOS
-
-    static buscarUsuarios() {
-        return cy.rest('GET', URL_USUARIOS)
-    }
-
-
     //POST-USUARIOS
 
     static cadastrarUsuario() {
         let usuario = Factory.gerarUsuario()
-
+        cy.writeFile('./cypress/fixtures/usuario.json', usuario)
         return cy.request({
             method: 'POST',
             url: URL_USUARIOS,
             body: usuario,
             failOnStatusCode: true,
+        })
+    }
+
+    static falhaAoCadastrarUsuario() {
+        return cy.fixture('usuario.json').then((res) => {
+            let email = res.email
+            cy.request({
+                method: 'POST',
+                url: URL_USUARIOS,
+                body: {
+                    "nome": "Sr. Kelly Costa",
+                    "email": email,
+                    "password": "eY3Yv8IaToT5rXH",
+                    "administrador": "false",
+                },
+                failOnStatusCode: false,
+            })
         })
     }
 

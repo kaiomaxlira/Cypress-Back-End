@@ -76,6 +76,16 @@ describe("Teste de rota /carrinhos da API serverest", () => {
                     ValidaServerest.validarDeletarCarrinhoCancelandoCompra(res)
                 })
             })
+
+            it('Deve excluir usuario', () => {
+                cy.fixture('usuarioid').then((res) => {
+                    let id = res._id
+                    Usuario.excluirUsuario(id).then((res) => {
+                        cy.contractValidation(res, "delete-usuarios", 200).then((res) => expect(res).to.be.eq(true))
+                        ValidaServerest.validarexclusaoUsuario(res)
+                    })
+                })
+            })
         })
     })
 })

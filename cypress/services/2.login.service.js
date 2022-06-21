@@ -15,4 +15,16 @@ export default class Login {
     static salvarBearer(resposta){
         Cypress.env('bearer', resposta.body.authorization.slice(7))
     }
+
+    static logarComEmailErrado(){
+        return cy.request({
+            method:'POST',
+            url: URL_LOGIN,
+            body:{
+                "email": "jmlkçj_Saraiva@yahoo.com",
+                "password": "kkkkkk"
+            },
+            failOnStatusCode: false,
+        })
+     }
 }

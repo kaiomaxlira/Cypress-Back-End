@@ -24,4 +24,11 @@ describe('Teste de rota /login da API serverest', () => {
             })
         })
     })
+
+    it('Deve avisar e-mail e/ou senha inválidos', () => {
+        Login.logarComEmailErrado().then( res => {
+            cy.contractValidation(res, "post-login", 400).then((res) => expect(res).to.be.eq(true))
+            ValidaServerest.validarlogarComEmailErrado(res)
+        })
+    })
 })
