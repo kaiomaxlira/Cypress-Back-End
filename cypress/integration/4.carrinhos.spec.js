@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 
 import Login from '../services/2.login.service'
+import Produto from '../services/3.produto.service'
+import Usuario from '../services/1.usuario.service';
 import Carrinhos from "../services/4.carrinho.service";
 import ValidaServerest from "../services/validaServerest.service";
 
@@ -11,61 +13,69 @@ describe("Teste de rota /carrinhos da API serverest", () => {
     //POST-CARRINHOS
 
     context('Logar com Sucesso', () => {
-        beforeEach('Logar', () => {
-            Carrinhos.buscarUsuarioParaLogin()
-            cy.get('@usuarioLogin').then(usuario => {
-                Login.logar(usuario).then(res => {
-                    ValidaServerest.validarLoginComSucesso(res)
-                    Carrinhos.salvarBearer(res)
+        before('Logar', () => {
+            Usuario.cadastrarUsuario().then((res) => {
+                let id = res.body._id
+                Usuario.buscarUsuarioPorId(id).then(res => {
+                    cy.wrap({
+                        email: res.body.email,
+                        password: res.body.password
+                    }).as('usuarioLogin')
+                })
+                cy.get('@usuarioLogin').then(usuario => {
+                    Login.logar(usuario).then(res => {
+                        cy.contractValidation(res, "post-login", 200).then((res) => expect(res).to.be.eq(true))
+                        ValidaServerest.validarLoginComSucesso(res)
+                        Login.salvarBearer(res)
+                    })
                 })
             })
         })
+        context('Concluindo compra', () => {
 
-        //POST_CARRINHOS
+            //POST_CARRINHOS
 
-        it('Deve cadastrar carrinho', () => {
-            Carrinhos.cadastrarCarrinho().then(res => {
-                cy.contractValidation(res, "post-carrinhos", 201).then((res) => expect(res).to.be.eq(true))
-                ValidaServerest.validarCadastroDeCarrinho(res)
+            it('Deve cadastrar carrinho', () => {
+                Produto.cadastrarProdutoComSucesso().then(res => {
+                    cy.writeFile('./cypress/fixtures/produtoid.json', res.body)
+                    Carrinhos.cadastrarCarrinho().then(res => {
+                        cy.contractValidation(res, "post-carrinhos", 201).then((res) => expect(res).to.be.eq(true))
+                        ValidaServerest.validarCadastroDeCarrinho(res)
+                    })
+                })
+            })
+
+            //DELETE-CARRIONHOS-CONCLUIR-COMPRA
+
+            it('Deve deletar carrinho e concluir compra', () => {
+                Carrinhos.deletarCarrinhoConcluirCompra().then(res => {
+                    cy.contractValidation(res, "delete-carrinhos-concluir-compra", 200).then((res) => expect(res).to.be.eq(true))
+                    ValidaServerest.validarDeletarCarrinhoConcluirCompra(res)
+                })
             })
         })
+        context('Cancelar compra', () => {
 
-        //DELETE-CARRIONHOS-CANCELAR-COMPRA
+            //POST_CARRINHOS
 
-        it('Deve deletar carrionho cancelando compra', () => {
-            Carrinhos.deletarCarrinhoCancelandoCompra().then(res => {
-                cy.contractValidation(res, "delete-carrinhos-cancelar-compra", 200).then((res) => expect(res).to.be.eq(true))
-                ValidaServerest.validarDeletarCarrinhoCancelandoCompra(res)
+            it('Deve cadastrar carrinho', () => {
+                Produto.cadastrarProdutoComSucesso().then(res => {
+                    cy.writeFile('./cypress/fixtures/produtoid.json', res.body)
+                    Carrinhos.cadastrarCarrinho().then(res => {
+                        cy.contractValidation(res, "post-carrinhos", 201).then((res) => expect(res).to.be.eq(true))
+                        ValidaServerest.validarCadastroDeCarrinho(res)
+                    })
+                })
             })
-        })
 
+            //DELETE-CARRIONHOS-CANCELAR-COMPRA
 
-        //DELETE-CARRIONHOS-CONCLUIR-COMPRA
-
-        it('Deve deletar carrionho e concluir compra', () => {
-            Carrinhos.deletarCarrinhoConcluirCompra().then(res => {
-                cy.contractValidation(res, "delete-carrinhos-concluir-compra", 200).then((res) => expect(res).to.be.eq(true))
-                ValidaServerest.validarDeletarCarrinhoConcluirCompra(res)
+            it('Deve deletar carrinho cancelando compra', () => {
+                Carrinhos.deletarCarrinhoCancelandoCompra().then(res => {
+                    cy.contractValidation(res, "delete-carrinhos-cancelar-compra", 200).then((res) => expect(res).to.be.eq(true))
+                    ValidaServerest.validarDeletarCarrinhoCancelandoCompra(res)
+                })
             })
         })
     })
-
-    //GET-CARRINHOS
-
-    it('Deve buscar todos os carrinhos', () => {
-        Carrinhos.buscarCarrinhos().then(res => {
-            cy.contractValidation(res, "get-carrinhos", 200).then((res) => expect(res).to.be.eq(true))
-            ValidaServerest.validarBuscaDeCarrinhos(res)
-        })
-    })
-
-    //GET-CARRINHOS-ID
-
-    it('Deve buscar todos os carrinhos com id', () => {
-        Carrinhos.buscarCarrinhosComId().then(res => {
-            cy.contractValidation(res, "get-carrinhos-id", 200).then((res) => expect(res).to.be.eq(true))
-            ValidaServerest.validarBuscaDeCarrinhosComId(res)
-        })
-    })
-
 })

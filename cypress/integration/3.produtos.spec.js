@@ -39,6 +39,7 @@ describe('Teste de rota /produtos da API serverest', () => {
         })
         it('Deve cadastrar produtos com sucesso', () => {
             Produto.cadastrarProdutoComSucesso().then(res => {
+                cy.writeFile('./cypress/fixtures/produtoid.json', res.body)
                 cy.contractValidation(res, "post-produtos", 201).then((res) => expect(res).to.be.eq(true))
                 ValidaServerest.validarCadastroDeProdutoComSucesso(res)
             })
@@ -47,27 +48,36 @@ describe('Teste de rota /produtos da API serverest', () => {
         //GET-PRODUTOS-ID
 
         it('Deve buscar produtos por id', () => {
-            Produto.buscarProdutosId().then(res => {
-                cy.contractValidation(res, "get-produtos-id", 200).then((res) => expect(res).to.be.eq(true))
-                ValidaServerest.validarBuscaDeProdutosId(res)
+            cy.fixture('produtoid').then((res) => {
+                let id = res._id
+                Produto.buscarProdutosId(id).then(res => {
+                    cy.contractValidation(res, "get-produtos-id", 200).then((res) => expect(res).to.be.eq(true))
+                    ValidaServerest.validarBuscaDeProdutosId(res)
+                })
             })
         })
 
         //PUT-PRODUTOS
 
         it('Deve alterar produto', () => {
-            Produto.alterarProduto().then(res => {
-                cy.contractValidation(res, "put-produtos", 200).then((res) => expect(res).to.be.eq(true))
-                ValidaServerest.validarAlteracaoNoProduto(res)
+            cy.fixture('produtoid').then((res) => {
+                let id = res._id
+                Produto.alterarProduto(id).then(res => {
+                    cy.contractValidation(res, "put-produtos", 200).then((res) => expect(res).to.be.eq(true))
+                    ValidaServerest.validarAlteracaoNoProduto(res)
+                })
             })
         })
 
         //DELETE-PRODUTOS
 
         it('Deve avisar produto excluído com sucesso', () => {
-            Produto.produtoExcluidoComSucesso().then(res => {
-                cy.contractValidation(res, "delete-produtos", 200).then((res) => expect(res).to.be.eq(true))
-                ValidaServerest.validarProdutoExcluidoComSucesso(res)
+            cy.fixture('produtoid').then((res) => {
+                let id = res._id
+                Produto.produtoExcluidoComSucesso(id).then(res => {
+                    cy.contractValidation(res, "delete-produtos", 200).then((res) => expect(res).to.be.eq(true))
+                    ValidaServerest.validarProdutoExcluidoComSucesso(res)
+                })
             })
         })
     })

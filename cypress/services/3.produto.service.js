@@ -23,57 +23,48 @@ export default class Produto {
             auth: {
                 bearer: Cypress.env("bearer")
             }
-        }).then(res => {
-            cy.wrap(res._id).as('produtoid')
-            console.log(cy.get('@produtoid'))
         })
+
     }
 
     //GET-PROTUDOS-ID
 
-    static buscarProdutosId() {
-            let id = cy.get('@produtoid')
-            return cy.request({
-                method: 'GET',
-                url: URL_PRODUTOS + `/${id}`,
-                failOnStatusCode: true,
-                body: null
-            })
-    }
-
-    //DELETE-PRODUTOS
-
-    static produtoExcluidoComSucesso() {
-        return this.buscarProdutos().then(res => {
-            let id = res.body.produtos[0]._id
-            cy.request({
-                method: 'DELETE',
-                url: URL_PRODUTOS + `/${id}`,
-                failOnStatusCode: true,
-                auth: {
-                    bearer: Cypress.env("bearer")
-                }
-            })
+    static buscarProdutosId(id) {
+        return cy.request({
+            method: 'GET',
+            url: URL_PRODUTOS + `/${id}`,
+            failOnStatusCode: true,
+            body: null
         })
     }
 
     //PUT-PRODUTOS
 
-    static alterarProduto() {
-            let id = 'kIEgBNi7on1HGYG1'
+    static alterarProduto(id) {
+        let produto = Factory.gerarProduto()
         return cy.request({
-                method: 'PUT',
-                url: URL_PRODUTOS + `/${id}`,
-                failOnStatusCode: true,
-                body: {
-                    "nome": "kaio max",
-                    "preco": 341,
-                    "descricao": "Mouse",
-                    "quantidade": 123,
-                },
-                auth: {
-                    bearer: Cypress.env("bearer")
-                }
-            })
-        }
+            method: 'PUT',
+            url: URL_PRODUTOS + `/${id}`,
+            failOnStatusCode: true,
+            body: produto,
+            auth: {
+                bearer: Cypress.env("bearer")
+            }
+        })
+    }
+
+    //DELETE-PRODUTOS
+
+    static produtoExcluidoComSucesso(id) {
+        return cy.request({
+            method: 'DELETE',
+            url: URL_PRODUTOS + `/${id}`,
+            failOnStatusCode: true,
+            auth: {
+                bearer: Cypress.env("bearer")
+            }
+        })
+
+    }
+
 }

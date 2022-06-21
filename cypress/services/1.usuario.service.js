@@ -24,22 +24,22 @@ export default class Usuario {
             failOnStatusCode: true,
         })
     }
-    
-    //DELETE-USUARIOS
-
-    static excluirUsuario(id) {
-        return cy.request({
-            method: 'DELETE',
-            url: URL_USUARIOS + `/${id}`,
-            failOnStatusCode: true
-        })
-    }
 
     //GET-USUARIOS-ID
 
     static buscarUsuarioPorId(id) {
         return cy.request({
             method: 'GET',
+            url: URL_USUARIOS + `/${id}`,
+            failOnStatusCode: true
+        })
+    }
+
+    //DELETE-USUARIOS
+
+    static excluirUsuario(id) {
+        return cy.request({
+            method: 'DELETE',
             url: URL_USUARIOS + `/${id}`,
             failOnStatusCode: true
         })
