@@ -20,7 +20,7 @@ export default class Factory {
             "nome": faker.name.findName(),
             "email": faker.internet.email(),
             "password": faker.internet.password(),
-            "administrador": faker.datatype.boolean().toString()
+            "administrador": 'true'//faker.datatype.boolean().toString()
         }
     }
 

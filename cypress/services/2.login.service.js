@@ -3,18 +3,13 @@ const URL_LOGIN = '/login'
 
 export default class Login {
 
-    static buscarUsuarioParaLogin(){
-        cy.request(URL_USUARIOS).then( res => {
-            cy.wrap({
-                email: res.body.usuarios[0].email,
-                password: res.body.usuarios[0].password 
-            }).as('usuarioLogin')
-                       
-        })
-    }
-
     static logar(usuario){
-        return cy.rest('POST', URL_LOGIN, usuario)
+        return cy.request({
+            method: 'POST',
+            url: URL_LOGIN,
+            failOnStatusCode: true,
+            body: usuario
+        })
     }
 
     static salvarBearer(resposta){

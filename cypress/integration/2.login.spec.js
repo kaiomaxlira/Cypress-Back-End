@@ -8,7 +8,13 @@ describe('Teste de rota /login da API serverest', () => {
 
     it('Deve realizar login com sucesso', () => {
         Usuario.cadastrarUsuario().then((res) => {
-            Login.buscarUsuarioParaLogin()
+            let id = res.body._id
+            Usuario.buscarUsuarioPorId(id).then(res => {
+                cy.wrap({
+                    email: res.body.email,
+                    password: res.body.password
+                }).as('usuarioLogin')
+            })
             cy.get('@usuarioLogin').then(usuario => {
                 Login.logar(usuario).then(res => {
                     cy.contractValidation(res, "post-login", 200).then((res) => expect(res).to.be.eq(true))

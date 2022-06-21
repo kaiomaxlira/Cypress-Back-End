@@ -7,14 +7,14 @@ export default class Usuario {
     //USUARIOS
     //GET-USUARIOS
 
-    static buscarUsuarios(){
+    static buscarUsuarios() {
         return cy.rest('GET', URL_USUARIOS)
     }
 
 
     //POST-USUARIOS
 
-    static cadastrarUsuario(){
+    static cadastrarUsuario() {
         let usuario = Factory.gerarUsuario()
 
         return cy.request({
@@ -24,16 +24,24 @@ export default class Usuario {
             failOnStatusCode: true,
         })
     }
-         //DELETE-USUARIOS
+    
+    //DELETE-USUARIOS
 
-    static excluirUsuario(){
-        return this.buscarUsuarios().then(res => {
-            let id = res.body.usuarios[0]._id
-            cy.request({
-                method: 'DELETE',
-                url: URL_USUARIOS + `/${id}`,
-                failOnStatusCode: true
-            })
+    static excluirUsuario(id) {
+        return cy.request({
+            method: 'DELETE',
+            url: URL_USUARIOS + `/${id}`,
+            failOnStatusCode: true
+        })
+    }
+
+    //GET-USUARIOS-ID
+
+    static buscarUsuarioPorId(id) {
+        return cy.request({
+            method: 'GET',
+            url: URL_USUARIOS + `/${id}`,
+            failOnStatusCode: true
         })
     }
 }
