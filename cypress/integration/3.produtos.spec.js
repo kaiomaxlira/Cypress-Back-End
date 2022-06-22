@@ -16,8 +16,6 @@ describe('Teste de rota /produtos da API serverest', () => {
         })
     })
 
-    //POST-PRODUTOS
-
     context('Logar com Sucesso', () => {
         beforeEach('Logar', () => {
             Usuario.cadastrarUsuario().then((res) => {
@@ -37,6 +35,9 @@ describe('Teste de rota /produtos da API serverest', () => {
                 })
             })
         })
+
+        //POST PRODUTOS
+
         it('Deve cadastrar produtos com sucesso', () => {
             Produto.cadastrarProdutoComSucesso().then(res => {
                 cy.writeFile('./cypress/fixtures/produtoid.json', res.body)

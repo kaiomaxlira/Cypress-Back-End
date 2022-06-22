@@ -8,10 +8,6 @@ import ValidaServerest from "../services/validaServerest.service";
 
 describe("Teste de rota /carrinhos da API serverest", () => {
 
-    //CARRINHOS
-
-    //POST-CARRINHOS
-
     context('Logar com Sucesso', () => {
         before('Logar', () => {
             Usuario.cadastrarUsuario().then((res) => {

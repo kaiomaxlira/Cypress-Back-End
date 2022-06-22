@@ -1,4 +1,3 @@
-const URL_USUARIOS = '/usuarios'
 const URL_LOGIN = '/login'
 
 export default class Login {

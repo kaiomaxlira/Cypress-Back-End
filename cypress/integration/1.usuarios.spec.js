@@ -6,6 +6,8 @@ import ValidaServerest from "../services/validaServerest.service";
 
 describe("Teste de rota /usuarios da API serverest", () => {
 
+    //POST USUARIO
+
     it("Deve cadastrar usuário", () => {
         Usuario.cadastrarUsuario().then((res) => {
             cy.writeFile('./cypress/fixtures/usuarioid.json', res.body)
@@ -22,6 +24,8 @@ describe("Teste de rota /usuarios da API serverest", () => {
         })
     })
 
+    //GET USUARIO
+
     it('Deve buscar usuário por ID', () => {
         cy.fixture('usuarioid').then((res) => {
             let id = res._id
@@ -31,6 +35,8 @@ describe("Teste de rota /usuarios da API serverest", () => {
             })
         })
     })
+
+    //DELETE USUARIO
 
     it('Deve excluir usuario', () => {
         cy.fixture('usuarioid').then((res) => {
