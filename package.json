@@ -1,5 +1,5 @@
 {
-  "name": "sprint5",
+  "name": "Cypress-Back-End",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -17,15 +17,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kaiomaxlira/LogicalForest_Sprint5_Kaio_Max_Compass.git"
+    "url": "git+https://github.com/kaiomaxlira/Cypress-Back-End.git"
   },
   "keywords": [],
   "author": "Kaio Max Lira Pereira",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kaiomaxlira/LogicalForest_Sprint5_Kaio_Max_Compass/issues"
+    "url": "https://github.com/kaiomaxlira/Cypress-Back-End/issues"
   },
-  "homepage": "https://github.com/kaiomaxlira/LogicalForest_Sprint5_Kaio_Max_Compass#readme",
+  "homepage": "https://github.com/kaiomaxlira/Cypress-Back-End#readme",
   "devDependencies": {
     "ajv": "^8.11.0",
     "cypress": "^9.7.0",
