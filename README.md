@@ -1,4 +1,4 @@
-# Automação dos Testes da API Serverest - LogicalForest
+# Automação dos Testes da API Serverest
 
  O projeto tem como função a automação de testes utilizando a API Serverest. As tecnologias utilizadas para realização dos tetes foram Cypress, Nodejs, Faker, mochawesome e Ajv.
 
@@ -49,7 +49,7 @@
 
 #### Código para clonar o repositório:
 ```
-git clone https://github.com/kaiomaxlira/LogicalForest_Sprint6_Kaio_Max_Compass.git
+git clone https://github.com/kaiomaxlira/Cypress-Back-End.git
 ```
 
 #### Instalando dependências
@@ -79,7 +79,3 @@ npm run test
 
 ## Autor
 Kaio Max Lira Pereira
-
-##### Me apoiaram no desenvolvimento da atividade
-##### - [Paulo Henrique](https://github.com/pauloshp)
-##### - [Thiago Bento](https://github.com/thiagosir)
